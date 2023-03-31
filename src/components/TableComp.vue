@@ -19,7 +19,7 @@ defineEmits(["selected"]);
 </script>
 <template>
   <table class="w-full mt-8 text-sm">
-    <thead class="hidden md:table-header-group text-gray-700 bg-zinc-100">
+    <thead class="hidden lg:table-header-group text-gray-700 bg-zinc-100">
       <tr class="text-left">
         <th v-if="selectable" class="p-4">
           <input type="checkbox" class="p-4" />
@@ -52,8 +52,7 @@ defineEmits(["selected"]);
           <div class="lg:flex gap-4 w-full items-center">
             <div class="w-full">
               <p>{{ item[header.value] }}</p>
-              <slot v-if="header.value === 'name'" name="name"></slot>
-              <slot v-if="header.value === 'actions'" name="actions"></slot>
+              <slot :name="header.value"></slot>
             </div>
           </div>
         </td>
