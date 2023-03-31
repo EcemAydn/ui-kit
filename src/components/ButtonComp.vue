@@ -1,10 +1,11 @@
 <script setup>
 import { cva } from "class-variance-authority";
 
-    const button = cva(['border-b-4 focus:border-none focus:shadow-inner'], {
+    const button = cva(['border-b-4 focus:border-none focus:shadow-inner whitespace-nowrap text-white'], {
       variants: {
         size: {
-          small: 'p-1 px-2',
+          xsmall: 'px-2',
+          small: 'p-1 px-2 md:p-2 md:px-4',
           normal: 'p-2 px-4',
           large: 'p-3 px-6',
         },
@@ -14,9 +15,9 @@ import { cva } from "class-variance-authority";
           large: 'rounded-full'
         },
         color: {
-          primary: 'bg-blue-300 border-blue-400',
-          secondary: 'bg-yellow-300 border-yellow-400',
-          warn: 'bg-red-300 border-red-400',
+          primary: 'bg-green-500 border-green-600',
+          secondary: 'bg-blue-500 border-blue-600',
+          warn: 'bg-red-500 border-red-600',
         }
       },
     })
@@ -27,7 +28,7 @@ defineProps({
   },
   size: {
     type: String,
-    default: 'normal',
+    default: 'small',
   },
   radius: {
     type: String,
@@ -42,7 +43,7 @@ defineProps({
     default: false,
   },
   validator(value) {
-    return ['small', 'normal', 'large', 'primary', 'secondary', 'warn', 'none'].includes(value.toLocaleLowerCase());
+    return ['xsmall', 'small', 'normal', 'large', 'primary', 'secondary', 'warn', 'none'].includes(value.toLocaleLowerCase());
   }
 })
 </script>
