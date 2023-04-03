@@ -21,7 +21,7 @@ function getComponent(type) {
 </script>
 
 <template>
-  <div class="w-full h-full overflow-hidden">
+  <div class="w-full h-full overflow-hidden bg-zinc-50 lg:bg-white">
     <LogoComp />
     <div class="w-full h-full flex">
       <MenuComp />
