@@ -17,10 +17,20 @@ const headers = ref([
 <template>
   <div class="w-full overflow-y-auto pb-24 bg-zinc-50">
     <TableComp selectable :headers="headers" :items="userStore.users">
-      <template #name> mail </template>
+      <template #name="{ item }">
+        <!-- <img
+          :src="item.avatar"
+          class="w-12 h-12 rounded-full absolute left-0 top-4"
+        /> -->
+        <div>
+          {{ item.email }}
+        </div>
+      </template>
       <template #actions>
-        <ButtonComp button-name="Edit" />
-        <ButtonComp button-name="Delete" color="warn" />
+        <div class="flex justify-center gap-2">
+          <ButtonComp button-name="Edit" />
+          <ButtonComp button-name="Delete" color="warn" />
+        </div>
       </template>
     </TableComp>
   </div>

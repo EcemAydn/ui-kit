@@ -34,13 +34,13 @@ defineEmits(["selected"]);
       <tr
         v-for="(item, index) in items"
         :key="index"
-        class="flex flex-col text-right p-8 md:p-0 lg:table-row shadow-lg border first:rounded-t-lg last:rounded-b-lg lg:text-left relative bg-white border-b transition duration-500 ease-in-out lg:hover:bg-zinc-50 lg:even:bg-zinc-50"
+        class="flex flex-col text-right lg:table-row shadow-lg border first:rounded-t-lg last:rounded-b-lg lg:text-left relative bg-white border-b transition duration-500 ease-in-out lg:hover:bg-zinc-50 lg:even:bg-zinc-50"
       >
         <td
           v-if="selectable"
           class="p-4 border-b-4 w-full lg:w-fit lg:border-b-0"
         >
-          <input type="checkbox" @click="$emit('selected', user.id)" />
+          <input type="checkbox" @click="$emit('selected', item.id)" />
         </td>
 
         <td
@@ -48,11 +48,13 @@ defineEmits(["selected"]);
           :key="index + 'asdadsa'"
           class="flex gap-4 items-center p-4 border-b lg:border-b-0 lg:table-cell"
         >
-          <p class="font-bold lg:hidden">{{ header.name.toUpperCase() }}</p>
+          <p class="font-bold lg:hidden whitespace-nowrap">
+            {{ header.name.toUpperCase() }}
+          </p>
           <div class="lg:flex gap-4 w-full items-center">
             <div class="w-full">
               <p>{{ item[header.value] }}</p>
-              <slot :name="header.value"></slot>
+              <slot :name="header.value" :item="item"></slot>
             </div>
           </div>
         </td>
