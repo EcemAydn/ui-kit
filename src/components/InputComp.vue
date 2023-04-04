@@ -1,6 +1,8 @@
 <script setup>
+import { ref } from "vue";
 import { cva } from "class-variance-authority";
 
+const forId = ref(new Date().getTime());
 const labelColor = cva(["pl-2"], {
   variants: {
     l_color: {
@@ -17,33 +19,41 @@ const labelColor = cva(["pl-2"], {
     },
   },
 });
-
-const input = cva(
-  ["peer outline-gray-700 w-full font-light border border-gray-300"],
+const borderDiv = cva(
+  ["flex border border-white rounded-lg justify-between items-center"],
   {
     variants: {
-      size: {
-        xsmall: "p-1 pl-2 text-sm",
-        small: "p-2 px-3 text-sm",
-        normal: "p-2 px-4",
-        large: "p-3 px-5",
-        xlarge: "p-4",
-      },
-      radius: {
-        none: "rounded-none",
-        small: "rounded-sm",
-        normal: "rounded-md",
-        large: "rounded-lg",
-        xlarge: "rounded-full",
-      },
       color: {
-        primary: "bg-white",
-        secondary: "bg-gray-700 text-white",
-        gray: "bg-gray-100",
+        primary: "border-gray-100",
+        secondary: "border-white",
+        gray: "border-gray-300",
       },
     },
   }
 );
+const input = cva(["outline-none w-full font-light"], {
+  variants: {
+    size: {
+      xsmall: "p-1 text-xs",
+      small: "p-1 px-4 text-xs",
+      normal: "p-2 px-4 text-sm",
+      large: "p-3",
+      xlarge: "p-3 px-6",
+    },
+    radius: {
+      none: "rounded-none",
+      small: "rounded-sm",
+      normal: "rounded-md",
+      large: "rounded-lg",
+      xlarge: "rounded-full",
+    },
+    color: {
+      primary: "bg-white",
+      secondary: "bg-gray-600 text-white",
+      gray: "bg-gray-100",
+    },
+  },
+});
 defineProps({
   label: {
     type: [String, Number],
@@ -62,7 +72,7 @@ defineProps({
   },
   color: {
     type: String,
-    default: "none",
+    default: "gray",
   },
   showSelect: {
     type: Boolean,
@@ -80,7 +90,10 @@ defineProps({
     type: String,
     default: "small",
   },
-
+  l_position: {
+    type: String,
+    default: "primary",
+  },
   validator(value) {
     return [
       "xsmall",
@@ -98,16 +111,24 @@ defineProps({
 defineEmits(["update:modelValue", "update:select"]);
 </script>
 <template>
-  <label :for="forId" :class="labelColor({ l_color, l_size })">{{
-    label
-  }}</label>
-  <input
-    required
-    v-bind="$attrs"
-    :id="forId"
-    :type="type"
-    @input="(e) => $emit('update:modelValue', e.target.value)"
-    :value="modelValue"
-    :class="input({ size, radius, color })"
-  />
+  <div class="flex flex-col relative">
+    <label :for="forId" :class="labelColor({ l_color, l_size })">{{
+      label
+    }}</label>
+    <div :class="borderDiv({ color })">
+      <div class="relative flex items-center">
+        <slot name="append"></slot>
+        <input
+          required
+          v-bind="$attrs"
+          :id="forId"
+          :type="type"
+          @input="(e) => $emit('update:modelValue', e.target.value)"
+          :value="modelValue"
+          :class="input({ size, radius, color })"
+        />
+        <slot name="prepend"></slot>
+      </div>
+    </div>
+  </div>
 </template>
