@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-vue-next";
 </script>
 <template>
   <div
-    class="px-2 flex items-center justify-between gap-6 bg-white mx-4 lg:mx-0 rounded-md"
+    class="px-2 flex items-center sticky justify-between gap-6 bg-white lg:mx-0 rounded-md -bottom-1 left-0"
   >
     <div class="flex items-center">
       <ChevronLeft></ChevronLeft>
