@@ -3,7 +3,7 @@ import { RouterView } from "vue-router";
 import LogoComp from "./components/LogoComp.vue";
 // import MenuComp from "./components/MenuComp.vue";
 import ContentComp from "./components/ContentComp.vue";
-import BenModal from "./components/BenModal.vue";
+import AppointmentModal from "./components/AppointmentModal.vue";
 import { useModalStore } from "./stores/modal";
 import modalComp from "./components/ModalComp.vue";
 import { useLoginStore } from "./stores/plandy";
@@ -15,10 +15,10 @@ function getComponent(type) {
   switch (type) {
     case "title":
       return ContentComp;
-    case "ben":
-      return BenModal;
+    case "appointment":
+      return AppointmentModal;
     default:
-      return ContentComp;
+      return AppointmentModal;
   }
 }
 loginStore.getUser();
