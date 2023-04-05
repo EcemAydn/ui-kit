@@ -34,11 +34,11 @@ defineEmits(["selected"]);
       </tr>
     </thead>
 
-    <tbody class="flex flex-col gap-2 lg:table-row-group p-4 pb-0">
+    <tbody class="flex flex-col gap-2 lg:table-row-group sm:p-4 pb-0">
       <tr
         v-for="(item, index) in items"
         :key="index"
-        class="flex flex-col lg:table-row shadow-none border first:rounded-t-lg last:rounded-b-lg last:border-b-0 lg:text-left relative bg-white border-b transition duration-500 ease-in-out lg:hover:bg-zinc-50 lg:even:bg-zinc-50"
+        class="flex flex-col lg:table-row shadow-none border sm:first:rounded-t-lg last:border-b-0 lg:text-left relative bg-white border-b transition duration-500 ease-in-out lg:hover:bg-zinc-50 lg:even:bg-zinc-50 text-black"
       >
         <td v-if="selectable" class="p-4 text-left">
           <input type="checkbox" @click="$emit('selected', item.id)" />
