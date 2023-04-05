@@ -53,7 +53,7 @@ appointmentStore.getAppointments();
       :items="appointmentStore.appointments"
     >
       <template #customer="{ item }">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
           <AvatarComp
             :image-link="item.customer.avatar_url"
             :avatar-text="`${item.customer.first_name} ${item.customer.last_name}`"
