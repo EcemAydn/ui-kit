@@ -1,30 +1,34 @@
 <script setup>
 import { RouterView } from "vue-router";
 import LogoComp from "./components/LogoComp.vue";
-import MenuComp from "./components/MenuComp.vue";
-import EditModal from "./components/EditModal.vue";
+// import MenuComp from "./components/MenuComp.vue";
+import ContentComp from "./components/ContentComp.vue";
 import BenModal from "./components/BenModal.vue";
 import { useModalStore } from "./stores/modal";
 import modalComp from "./components/ModalComp.vue";
+import { useLoginStore } from "./stores/plandy";
+
+const loginStore = useLoginStore();
 
 const modalStore = useModalStore();
 function getComponent(type) {
   switch (type) {
     case "title":
-      return EditModal;
+      return ContentComp;
     case "ben":
       return BenModal;
     default:
-      return EditModal;
+      return ContentComp;
   }
 }
+loginStore.getUser();
 </script>
 
 <template>
   <div class="w-full h-full overflow-hidden bg-zinc-50 lg:bg-white">
     <LogoComp />
     <div class="w-full h-full flex">
-      <MenuComp />
+      <!-- <MenuComp /> -->
       <modalComp
         v-for="(modal, index) in modalStore.modals"
         :key="index + 123123213"
