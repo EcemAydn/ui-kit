@@ -20,13 +20,13 @@ const labelColor = cva(["pl-2"], {
   },
 });
 const borderDiv = cva(
-  ["flex border border-white rounded-lg justify-between items-center"],
+  ["flex w-full border rounded-lg justify-between items-center"],
   {
     variants: {
       color: {
-        primary: "border-gray-100",
+        primary: "border-gray-300",
         secondary: "border-white",
-        gray: "border-gray-300",
+        gray: "border-gray-50",
       },
     },
   }
@@ -74,10 +74,6 @@ defineProps({
     type: String,
     default: "gray",
   },
-  showSelect: {
-    type: Boolean,
-    default: false,
-  },
   radius: {
     type: String,
     default: "normal",
@@ -112,11 +108,11 @@ defineEmits(["update:modelValue", "update:select"]);
 </script>
 <template>
   <div class="flex flex-col relative">
-    <label :for="forId" :class="labelColor({ l_color, l_size })">{{
+    <label :for="forId" :class="labelColor({ l_color, l_size, l_position })">{{
       label
     }}</label>
     <div :class="borderDiv({ color })">
-      <div class="relative flex items-center">
+      <div class="relative flex items-center w-full">
         <slot name="append"></slot>
         <input
           required
