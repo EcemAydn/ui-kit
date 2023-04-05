@@ -1,7 +1,40 @@
 <script setup>
 import { useModalStore } from "../stores/modal";
+import { XCircle } from "lucide-vue-next";
 
-// import ButtonComp from "../components/ButtonComp.vue";
+import { cva } from "class-variance-authority";
+
+const modal = cva(
+  [
+    "w-full h-auto sm:max-w-lg md:max-w-xl p-2 md:p-4 flex flex-col items-center bg-white relative border border-black/20",
+  ],
+  {
+    variants: {
+      radius: {
+        none: "rounded-none",
+        small: "rounded-sm",
+        normal: "rounded-md",
+        large: "rounded-lg",
+        full: "rounded-full",
+      },
+    },
+  }
+);
+
+defineProps({
+  radius: {
+    type: String,
+    default: "large",
+  },
+  title: {
+    type: String,
+  },
+  validator(value) {
+    return ["none", "small", "normal", "large", "full"].includes(
+      value.toLocaleLowerCase()
+    );
+  },
+});
 
 const modalStore = useModalStore();
 
@@ -12,20 +45,24 @@ function closeModalButton() {
 <template>
   <div
     @click="closeModalButton"
-    class="w-full h-full fixed flex flex-col items-center justify-center z-50 left-0 right-0 top-0 bottom-0 bg-black/30"
+    class="w-full h-full fixed flex flex-col items-center justify-center z-50 inset-0 bg-black/30"
   >
-    <div
-      @click.stop
-      class="w-fit md:px-4 flex flex-col items-center bg-white rounded-md relative"
-    >
-      <button
-        class="w-fit absolute -right-3 -top-3 font-bold bg-white border p-1 px-3 rounded-full"
-        @click="closeModalButton"
-      >
-        x
-      </button>
-      <!-- <ButtonComp button-name="x" color="warn" size="xsmall" class="absolute -right-3 -top-3 font-bold border-none" radius="large" @click="closeModalButton"/> -->
-      <slot> </slot>
+    <div @click.stop :class="modal({ radius })">
+      <div class="flex justify-between w-full">
+        <div class="text-lg font-bold">{{ title }}</div>
+
+        <button @click="closeModalButton">
+          <XCircle fill="white" />
+        </button>
+      </div>
+
+      <div class="w-full h-auto">
+        <slot> </slot>
+      </div>
+
+      <div class="flex justify-end">
+        <slot name="actions"> </slot>
+      </div>
     </div>
   </div>
 </template>
