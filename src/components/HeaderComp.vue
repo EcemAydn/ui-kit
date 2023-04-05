@@ -12,7 +12,7 @@ defineProps({
 });
 </script>
 <template>
-  <div class="pb-4 pr-6 flex flex-col gap-6">
+  <div class="pb-4 px-6 flex flex-col gap-6">
     <h2 class="font-bold text-2xl px-4 pt-4">{{ title }}</h2>
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
