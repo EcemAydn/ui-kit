@@ -4,13 +4,15 @@ import api from "../utils/api.js";
 
 export const useAppointmentStore = defineStore("Appointment", () => {
   const appointments = ref([]);
+  const services = ref([]);
+  const staffs = ref([]);
+  const customers = ref([]);
 
   function getAppointments() {
     return new Promise((resolve, reject) => {
       api
         .get("/appointments")
         .then((response) => {
-          console.log(response.data);
           appointments.value = response.data.appointments;
           resolve();
         })
@@ -23,6 +25,61 @@ export const useAppointmentStore = defineStore("Appointment", () => {
         });
     });
   }
+
+  function getService() {
+    return new Promise((resolve, reject) => {
+      api
+        .get("/services")
+        .then((response) => {
+          services.value = response.data.services;
+          resolve();
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data.message);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
+
+  function getStaffs() {
+    return new Promise((resolve, reject) => {
+      api
+        .get("/staffs")
+        .then((response) => {
+          staffs.value = response.data.staffs;
+          resolve();
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data.message);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
+
+  function getCustomers() {
+    return new Promise((resolve, reject) => {
+      api
+        .get("/customers")
+        .then((response) => {
+          customers.value = response.data.customers;
+          resolve();
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data.message);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
+
   function createAppointment(item) {
     return new Promise((resolve, reject) => {
       api
@@ -53,6 +110,12 @@ export const useAppointmentStore = defineStore("Appointment", () => {
   return {
     getAppointments,
     appointments,
+    services,
+    staffs,
+    customers,
     createAppointment,
+    getService,
+    getStaffs,
+    getCustomers,
   };
 });
