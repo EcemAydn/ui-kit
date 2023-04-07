@@ -14,8 +14,36 @@ export const useAppointmentStore = defineStore("Appointment", () => {
         .get("/appointments")
         .then((response) => {
           appointments.value = response.data.appointments;
-          console.log(appointments.value);
           resolve();
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data.message);
+          } else {
+            reject(error);
+          }
+        });
+    });
+  }
+
+  function editAppointments(item) {
+    return new Promise((resolve, reject) => {
+      api
+        .put(`/appointments/update/${item.id}`, {
+          customer_id: item.customer_id,
+          service_id: item.service_id,
+          staff_id: item.staff_id,
+          payment: item.payment,
+          duration: item.duration,
+          start_at: item.start_at,
+          status: item.status,
+        })
+        .then((response) => {
+          const findItem = appointments.value.findIndex(
+            (item2) => item2.id === item.id
+          );
+          appointments.value.splice(findItem, 1, response.data.appointment);
+          resolve("Successful");
         })
         .catch((error) => {
           if (error.response) {
@@ -69,7 +97,6 @@ export const useAppointmentStore = defineStore("Appointment", () => {
         .get("/customers")
         .then((response) => {
           customers.value = response.data.customers;
-          console.log(customers.value);
           resolve();
         })
         .catch((error) => {
@@ -95,7 +122,6 @@ export const useAppointmentStore = defineStore("Appointment", () => {
           status: item.status,
         })
         .then((response) => {
-          console.log(response.data);
           appointments.value.unshift(response.data.appointment);
           resolve("Successful");
         })
@@ -111,6 +137,7 @@ export const useAppointmentStore = defineStore("Appointment", () => {
 
   return {
     getAppointments,
+    editAppointments,
     appointments,
     services,
     staffs,
