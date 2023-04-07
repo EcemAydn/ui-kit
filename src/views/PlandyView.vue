@@ -9,6 +9,7 @@ import { useModalStore } from "../stores/modal.js";
 import { Plus } from "lucide-vue-next";
 import { ChevronLeft } from "lucide-vue-next";
 import { ChevronRight } from "lucide-vue-next";
+import { Edit } from "lucide-vue-next";
 import AvatarComp from "../components/AvatarComp.vue";
 
 const appointmentStore = useAppointmentStore();
@@ -21,10 +22,19 @@ const headers = ref([
   { name: "SÜRE", value: "duration" },
   { name: "TARİH", value: "start_at" },
   { name: "DURUM", value: "status" },
+  { name: "", value: "actions" },
 ]);
 
 function addUser() {
-  modalStore.addModal({ type: "Create" });
+  modalStore.addModal({ type: "Appointments", title: "Create Appointment" });
+}
+
+function editAppointments(item) {
+  modalStore.addModal({
+    type: "Appointments",
+    title: "Update Appointment",
+    item: { ...item },
+  });
 }
 
 appointmentStore.getAppointments();
@@ -116,6 +126,15 @@ appointmentStore.getAppointments();
           </ButtonComp>
         </div>
       </template> -->
+      <template #actions="{ item }">
+        <div class="flex justify-end gap-2">
+          <ButtonComp button-name="Edit User" @click="editAppointments(item)">
+            <template #append>
+              <Edit class="w-4 h-4" />
+            </template>
+          </ButtonComp>
+        </div>
+      </template>
     </TableComp>
 
     <TableFooterComp>
