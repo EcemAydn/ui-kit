@@ -15,7 +15,7 @@ const user = ref({
   status: "",
   payment: "",
 });
-const statusList = ref(["Approved", "Pending"]);
+const statusList = ref(["Approved", "Pending", "Canceled", "Completed"]);
 appointmentStore.getCustomers();
 appointmentStore.getService();
 appointmentStore.getStaffs();
