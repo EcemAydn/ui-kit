@@ -7,6 +7,7 @@ import AppointmentModal from "./components/AppointmentModal.vue";
 import { useModalStore } from "./stores/modal";
 import modalComp from "./components/ModalComp.vue";
 import { useLoginStore } from "./stores/plandy";
+import AppointmentModalDeneme from "./components/AppointmentModalDeneme.vue";
 
 const loginStore = useLoginStore();
 
@@ -18,7 +19,7 @@ function getComponent(type) {
     case "appointment":
       return AppointmentModal;
     default:
-      return AppointmentModal;
+      return AppointmentModalDeneme;
   }
 }
 loginStore.getUser();
@@ -32,6 +33,7 @@ loginStore.getUser();
       <modalComp
         v-for="(modal, index) in modalStore.modals"
         :key="index + 123123213"
+        :title="modal.title"
       >
         <component
           :is="getComponent(modal.type)"
