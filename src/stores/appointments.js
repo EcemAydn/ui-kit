@@ -14,6 +14,7 @@ export const useAppointmentStore = defineStore("Appointment", () => {
         .get("/appointments")
         .then((response) => {
           appointments.value = response.data.appointments;
+          console.log(appointments.value);
           resolve();
         })
         .catch((error) => {
@@ -68,6 +69,7 @@ export const useAppointmentStore = defineStore("Appointment", () => {
         .get("/customers")
         .then((response) => {
           customers.value = response.data.customers;
+          console.log(customers.value);
           resolve();
         })
         .catch((error) => {
@@ -94,7 +96,7 @@ export const useAppointmentStore = defineStore("Appointment", () => {
         })
         .then((response) => {
           console.log(response.data);
-          appointments.value.push(response.data.appointments);
+          appointments.value.unshift(response.data.appointment);
           resolve("Successful");
         })
         .catch((error) => {
