@@ -1,7 +1,7 @@
 <script setup>
 import InputComp from "./InputComp.vue";
 import ButtonComp from "./ButtonComp.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useAppointmentStore } from "../stores/appointments.js";
 import { useModalStore } from "../stores/modal.js";
 
@@ -15,22 +15,67 @@ const user = ref({
   status: "",
   payment: "",
 });
+const props = defineProps({
+  item: {
+    type: Object,
+  },
+});
 const statusList = ref(["Approved", "Pending", "Canceled", "Completed"]);
+const modalStore = useModalStore();
 appointmentStore.getCustomers();
 appointmentStore.getService();
 appointmentStore.getStaffs();
-const modalStore = useModalStore();
+
+onMounted(() => {
+  if (props.item) {
+    user.value.id = props.item.id;
+    user.value.customer = props.item.customer.id;
+    user.value.service = props.item.service.id;
+    user.value.staff = props.item.staff.id;
+    user.value.start_at = props.item.start_at;
+    user.value.duration = props.item.duration;
+    user.value.status = props.item.status;
+    user.value.payment = props.item.payment;
+  }
+});
+
 function saveButton() {
-  appointmentStore.createAppointment({
-    customer_id: user.value.customer,
-    service_id: user.value.service,
-    staff_id: user.value.staff,
-    payment: "Ticket",
-    duration: user.value.duration,
-    start_at: user.value.start_at,
-    status: user.value.status,
-  });
-  modalStore.closeModal();
+  if (props.item) {
+    appointmentStore
+      .editAppointments({
+        id: user.value.id,
+        customer_id: user.value.customer,
+        service_id: user.value.service,
+        staff_id: user.value.staff,
+        payment: "Ticket",
+        duration: user.value.duration,
+        start_at: user.value.start_at,
+        status: user.value.status,
+      })
+      .then(() => {
+        modalStore.closeModal();
+      })
+      .catch(() => {
+        console.log("arda");
+      });
+  } else {
+    appointmentStore
+      .createAppointment({
+        customer_id: user.value.customer,
+        service_id: user.value.service,
+        staff_id: user.value.staff,
+        payment: "Ticket",
+        duration: user.value.duration,
+        start_at: user.value.start_at,
+        status: user.value.status,
+      })
+      .then(() => {
+        modalStore.closeModal();
+      })
+      .catch(() => {
+        console.log("arda turan");
+      });
+  }
 }
 
 function closeModalButton() {
